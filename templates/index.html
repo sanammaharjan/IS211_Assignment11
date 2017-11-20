@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>To Do List</title>
+    <style>
+    #main{
+    }
+    .column {
+        float: left;
+        background-color: lightblue;
+        width: 20%;
+        }
+    .column1 {
+        float: left;
+
+        width: 80%}
+
+      body {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      }
+      table {
+          width: 55%;
+      }
+      table, td, th {
+          border: 1px solid white;
+      }
+      th {
+          background-color: #142857;
+          color: #ffffff;
+          font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+          text-align: left;
+      }
+      td {
+          background-color: lightblue;
+          color: #ffffff;
+          font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+      }
+    </style>
+  </head>
+
+  <body>
+  <div id="main">
+      <div class="column">
+          <span>Add a Task</span>
+          <form action="/submit" method="post">
+            Task: <input type="text" name="task"><br>
+        Email: <input type="text" name="email"><br>
+        Priority: <select type="select" name="priority">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option></select><br>
+        <input type="submit" value="Submit">
+
+    </form>
+          <font color="red">{{status}}</font>
+      </div>
+
+      <div class="column1"><table>
+      <tr>
+          <th style="width:55%">Task</th>
+          <th style="width:25%">Email</th>
+          <th style="width:10%">Priority</th>
+          <th>Action</th>
+      </tr>
+        {% for task in todo_list %}
+            <tr>
+                <td>{{ task.task }}</td>
+                <td>{{ task.email }}</td>
+                <td>{{ task.priority }}</td>
+                <td valign="center" align="center" bgcolor="#00FF00">
+                  <form action="/delete" method="post">
+                    <input type="submit" value="Delete">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                  </form>
+                    <form action="/save" method="post">
+                    <input type="submit" value="Save">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                  </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table><br>
+
+    <form action="/clear" method="post">
+        <input type="submit" value="Clear">
+    </form><br>
+
+
+      </div>
+  </div>
+  </body>
+</html>
